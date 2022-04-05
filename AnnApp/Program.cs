@@ -39,6 +39,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/", (AnnContext db) => db.Annoucements.ToList());
-
 app.Run();
