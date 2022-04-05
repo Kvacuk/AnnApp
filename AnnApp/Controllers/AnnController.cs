@@ -1,7 +1,7 @@
-﻿using AnnApp.DataProvider.Entities;
-using AnnApp.Services.DTO;
+﻿using AnnApp.Services.DTO;
 using AnnApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,36 +17,44 @@ namespace AnnApp.Core.Controllers
             _announcementService = announcement;
         }
 
-        // GET: api/<AnnController>
+        /// Announcements list
         [HttpGet("Announccements")]
-        public async Task<IEnumerable<AnnouncementDto>> GetList()
+        public async Task<IActionResult> GetAnnouncementsList()
         {
-            return await _announcementService.GetAnnouncementListAsync();
+            var list = await _announcementService.GetAnnouncementListAsync();
+            return Ok(list);
         }
 
-        // GET api/<AnnController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        /// Getting announcement by Id
+        [HttpGet("Announcement/{AnnId}")]
+        public async Task<IActionResult> GetAnnouncementById(string AnnId)
         {
-            return "value";
+            var announcement = await _announcementService.GetAnnouncementByIdAsync(AnnId);
+            return Ok(announcement);
         }
 
-        // POST api/<AnnController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        /// Allows you to add a new announcement.
+        [HttpPost("Announcement")]
+        public async Task<IActionResult> AddNewAnnoucement(string title, string description)
         {
+            var addedAnnouncement = await _announcementService.AddAnnouncementAsync(title,description);
+            return Ok(addedAnnouncement);
         }
 
-        // PUT api/<AnnController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        /// Allows you to edit a announcement.
+        [HttpPut("Announcement/{id}")]
+        public async Task<IActionResult> EditAnnouncement(string id, string title,string description)
         {
+            var res = await _announcementService.EditAnnouncementAsync(id,title,description);
+            return Ok(res);
         }
 
-        // DELETE api/<AnnController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        /// Allows you to Remove a announcement.
+        [HttpDelete("Announcement/{Id}")]
+        public async Task<IActionResult> RemoveAnnouncement(string Id)
         {
+            await _announcementService.DeleteAnnouncementAsync(Id);
+            return Ok("Announcement successfully removed");
         }
     }
 }

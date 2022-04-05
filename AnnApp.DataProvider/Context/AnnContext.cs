@@ -21,7 +21,7 @@ namespace AnnApp.DataProvider.Context
             modelBuilder.Entity<Announcement>().HasData(
                 new Announcement
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "An Old Man Lived in the Village",
                     Description = @"An old man lived in the village. He was one of the most unfortunate people in the world. The whole village was tired of him; he was always gloomy, he constantly complained and was always in a bad mood.
 
@@ -44,7 +44,7 @@ namespace AnnApp.DataProvider.Context
                 },
                 new Announcement
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "The Wise Man",
                     Description = @"People have been coming to the wise man, complaining about the same problems every time. One day he told them a joke and everyone roared in laughter.
         After a couple of minutes, he told them the same joke and only a few of them smiled.
@@ -57,7 +57,7 @@ namespace AnnApp.DataProvider.Context
                 },
                 new Announcement
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "Two Friends & The Bear",
                     Description = @"Vijay and Raju were friends. On a holiday they went walking into a forest, enjoying the beauty of nature. Suddenly they saw a bear coming at them. They became frightened.
         Raju, who knew all about climbing trees, ran up to a tree and climbed up quickly. He didn’t think of Vijay. Vijay had no idea how to climb the tree.

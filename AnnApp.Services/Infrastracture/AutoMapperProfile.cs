@@ -8,18 +8,11 @@ namespace AnnApp.Services.Infrastracture
     {
         public AutoMapperProfile()
         {
-            CreateMap<AnnouncementDto, Announcement>().AfterMap(
-                (dto, an) =>
-                {
-                    an.Id = Guid.Parse(dto.Id);
-                });
+            CreateMap<AnnouncementDto, Announcement>();
+            
 
 
-            CreateMap<Announcement, AnnouncementDto>().AfterMap(
-                (an, dto) =>
-                {
-                    dto.Id = an.Id.ToString();
-                })
+            CreateMap<Announcement, AnnouncementDto>()               
                 .ForMember(x => x.SimilarAnnouncements, opt => opt.Ignore());
         }
     }

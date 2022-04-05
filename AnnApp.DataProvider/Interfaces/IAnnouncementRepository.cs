@@ -2,7 +2,7 @@
 
 namespace AnnApp.DataProvider.Interfaces
 {
-    public interface IAnnouncementRepository : IRepository<Announcement, Guid>
+    public interface IAnnouncementRepository : IRepository<Announcement, string>
     {
 
     }

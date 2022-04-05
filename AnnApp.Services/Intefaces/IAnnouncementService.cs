@@ -6,8 +6,8 @@ namespace AnnApp.Services.Interfaces
     {
         Task<IEnumerable<AnnouncementDto>> GetAnnouncementListAsync();
         Task<AnnouncementDto> GetAnnouncementByIdAsync(string Id);
-        Task<AnnouncementDto> AddAnnouncementAsync(AnnouncementDto dto);
-        Task<AnnouncementDto> EditAnnouncementAsync(AnnouncementDto dto);
+        Task<AnnouncementDto> AddAnnouncementAsync(string title,string description);
+        Task<AnnouncementDto> EditAnnouncementAsync(string id, string title, string description);
         Task DeleteAnnouncementAsync(string Id);
     }
 }

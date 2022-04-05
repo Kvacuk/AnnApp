@@ -17,14 +17,15 @@ namespace AnnApp.Services.Services
             _database = context;
             _mapper = mapper;
         }
-        public async Task<AnnouncementDto> AddAnnouncementAsync(AnnouncementDto dto)
+        public async Task<AnnouncementDto> AddAnnouncementAsync(string title, string description)
         {
-
-            if (dto != null)
+            if (title != null)
             {
-                var item = _mapper.Map<Announcement>(dto);
-                item.Id = Guid.NewGuid();
-                item.CreatedDate = DateTime.UtcNow;
+                var item = new Announcement();
+                item.Title = title;
+                item.Description = $@"{description}";
+                item.Id = Guid.NewGuid().ToString();
+                item.CreatedDate = DateTime.Now;
 
                 await _database.AnnouncementRepository.CreateAsync(item);
                 await _database.SaveAsync();
@@ -39,10 +40,11 @@ namespace AnnApp.Services.Services
 
         public async Task DeleteAnnouncementAsync(string Id)
         {
-            var expressionForGuid = @"^\w8-\w4-\w4-\w4-\w12$";
+            var expressionForGuid = @"^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
             if (!String.IsNullOrWhiteSpace(Id) && Regex.IsMatch(Id, expressionForGuid))
             {
-                await _database.AnnouncementRepository.DeleteByIdAsync(Guid.Parse(Id));
+                await _database.AnnouncementRepository.DeleteByIdAsync(Id);
+                await _database.AnnouncementRepository.SaveAsync();
             }
             else
             {
@@ -50,11 +52,11 @@ namespace AnnApp.Services.Services
             }
         }
 
-        public async Task<AnnouncementDto> EditAnnouncementAsync(AnnouncementDto dto)
+        public async Task<AnnouncementDto> EditAnnouncementAsync(string id, string title, string description)
         {
-            var item = await GetAnnouncementByIdAsync(dto.Id);
-            item.Title = dto.Title;
-            item.Description = dto.Description;
+            var item = await GetAnnouncementByIdAsync(id);
+            item.Title = title;
+            item.Description = description;
             var tmpItem = _mapper.Map<Announcement>(item);
             _database.AnnouncementRepository.Update(tmpItem);
             await _database.SaveAsync();
@@ -63,11 +65,10 @@ namespace AnnApp.Services.Services
 
         public async Task<AnnouncementDto> GetAnnouncementByIdAsync(string Id)
         {
-            var expressionForGuid = @"^\w8-\w4-\w4-\w4-\w12$";
-            if (!String.IsNullOrWhiteSpace(Id) && Regex.IsMatch(Id, expressionForGuid))
+            var expressionForGuid = @"^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
+            if (!String.IsNullOrWhiteSpace(Id) &&  Regex.IsMatch(Id, expressionForGuid))
             {
-                var paresedId = Guid.Parse(Id);
-                var item = await _database.AnnouncementRepository.GetItemAsync(paresedId);
+                var item = await _database.AnnouncementRepository.GetItemAsync(Id);
                 if (item != null)
                 {
                     var res = _mapper.Map<AnnouncementDto>(item);
@@ -97,6 +98,8 @@ namespace AnnApp.Services.Services
             int counter = 0;
             foreach (var item in list)
             {
+                if (item.Id == dto.Id)
+                    continue;
                 if (counter == 3)
                     yield break;
                 string[] itemArr = item.Title.Split(" ");
