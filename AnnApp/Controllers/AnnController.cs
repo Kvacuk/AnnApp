@@ -18,7 +18,7 @@ namespace AnnApp.Core.Controllers
         }
 
         /// Announcements list
-        [HttpGet("Announccements")]
+        [HttpGet]
         public async Task<IActionResult> GetAnnouncementsList()
         {
             var list = await _announcementService.GetAnnouncementListAsync();
@@ -26,15 +26,15 @@ namespace AnnApp.Core.Controllers
         }
 
         /// Getting announcement by Id
-        [HttpGet("Announcement/{AnnId}")]
-        public async Task<IActionResult> GetAnnouncementById(string AnnId)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetAnnouncementById(string Id)
         {
-            var announcement = await _announcementService.GetAnnouncementByIdAsync(AnnId);
+            var announcement = await _announcementService.GetAnnouncementByIdAsync(Id);
             return Ok(announcement);
         }
 
         /// Allows you to add a new announcement.
-        [HttpPost("Announcement")]
+        [HttpPost]
         public async Task<IActionResult> AddNewAnnoucement(string title, string description)
         {
             var addedAnnouncement = await _announcementService.AddAnnouncementAsync(title,description);
@@ -42,7 +42,7 @@ namespace AnnApp.Core.Controllers
         }
 
         /// Allows you to edit a announcement.
-        [HttpPut("Announcement/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditAnnouncement(string id, string title,string description)
         {
             var res = await _announcementService.EditAnnouncementAsync(id,title,description);
@@ -50,7 +50,7 @@ namespace AnnApp.Core.Controllers
         }
 
         /// Allows you to Remove a announcement.
-        [HttpDelete("Announcement/{Id}")]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> RemoveAnnouncement(string Id)
         {
             await _announcementService.DeleteAnnouncementAsync(Id);

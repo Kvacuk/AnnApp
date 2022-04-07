@@ -1,0 +1,22 @@
+.header{
+    margin-top:  5%;
+}
+
+.counter{
+    font-weight: bold;
+}
+
+/* .btn{
+    width: 20%;
+} */
+
+tr .items .btn {
+    justify-content: stretch;
+    max-width: max-content;
+   
+}
+
+.container-fluid
+{
+    width: 95%;
+}
