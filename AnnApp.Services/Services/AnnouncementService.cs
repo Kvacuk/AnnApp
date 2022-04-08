@@ -88,33 +88,40 @@ namespace AnnApp.Services.Services
         {
             var list = await _database.AnnouncementRepository.ListItemsAsync();
             return _mapper.Map<IEnumerable<AnnouncementDto>>(list);
-
         }
 
         private IEnumerable<AnnouncementDto> SimilarAnnouncements(AnnouncementDto dto)
         {
-            string[] dtoArr = dto.Title.Split(" ");
+            string[] dtoTitleArr = dto.Title.Split(' ',',','.');
+            string[] dtoDescriptionArr = dto.Description.Split(' ', ',', '.');
             var list = GetAnnouncementListAsync().Result;
-            int counter = 0;
-            foreach (var item in list)
-            {
-                if (item.Id == dto.Id)
-                    continue;
-                if (counter == 3)
-                    yield break;
-                string[] itemArr = item.Title.Split(" ");
-                foreach (var item2 in dtoArr)
-                    foreach (var item3 in itemArr)
-                    {
-                        if (item2.Equals(item3))
-                        {
-                            yield return item;
-                            counter++;
-                            goto End;
-                        }
-                    }
-                End:;
-            }
+
+            var res = list
+                .Where(x => x.Title.Split(' ').Intersect(dtoTitleArr).Count() > 0&& x.Description.Split(' ').Intersect(dtoDescriptionArr).Count() > 0)
+                .OrderBy(x=> x.Title.Split(' ').Intersect(dtoTitleArr).Count())
+                .SkipWhile(x=>x.Id==dto.Id)
+                .Take(3);
+            return res;
+            //int counter = 0;
+            //foreach (var item in list)
+            //{
+            //    if (item.Id == dto.Id)
+            //        continue;
+            //    if (counter == 3)
+            //        yield break;
+            //    string[] itemTitleArr = item.Title.Split(' ', ',', '.');
+            //    foreach (var item2 in dtoTitleArr)
+            //        foreach (var item3 in itemTitleArr)
+            //        {
+            //            if (item2.Equals(item3))
+            //            {
+            //                yield return item;
+            //                counter++;
+            //                goto End;
+            //            }
+            //        }
+            //    End:;
+            //}
         }
     }
 }

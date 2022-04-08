@@ -1,16 +1,12 @@
         async function GetAnnouncementsList() {
-            // отправляет запрос и получаем ответ
             const response = await fetch("/api/Ann", {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
-            // если запрос прошел нормально
             if (response.ok === true) {
-                // получаем данные
                 const anns = await response.json();
                 let tBody = document.querySelector("tbody");
                
-                
                 let counter = 0; 
                 anns.forEach(item => {
                     counter++;
@@ -19,19 +15,20 @@
                     editBtn.classList.add(`btn`);
                     editBtn.classList.add(`btn-outline-primary`);
                     editBtn.innerText = 'Edit';
-                    //editBtn.setAttribute('onclick', `displayEditForm(${item.id})`);
+                    editBtn.addEventListener("click",()=>console.log(item.id));
+                    //editBtn.addEventListener("click", myModal.toggle());
+                    //editBtn.setAttribute('onclick', `AnnouncementInfo(${item.id})`);
 
                     const deleteBtn = document.createElement("button");
                     deleteBtn.classList.add(`btn`);
                     deleteBtn.classList.add(`btn-outline-danger`);
                     deleteBtn.innerText = 'Delete';
+                    //deleteBtn.setAttribute('data-bs-target','#myModal');
+                    //deleteBtn.setAttribute(`onclick`,`AnnouncementInfo(${item.id})`);
                     //deleteBtn.setAttribute('onclick', `displayDeleteForm(${item.id})`);
 
-
                     let tr = tBody.insertRow();
-                    tr.classList.add(`btn`);
-                    tr.classList.add(`items`);
-                    tr.setAttribute(`onclick`,`AnnouncementInfo(${item.Id})`);
+                    tr.classList.add("items");
                     
                     let th = tr.insertCell(0);
                     th.className = "counter";
@@ -39,49 +36,79 @@
 
                     let td1 = tr.insertCell(1);
                     td1.append(`${item.title}`);
+                    td1.addEventListener("click", ()=>DisplayAnnouncementInfo(item.id));
 
                     let td2 = tr.insertCell(2);
                     td2.appendChild(editBtn);
-
+                    
                     let td3 = tr.insertCell(3);
                     td3.appendChild(deleteBtn);
-
-                    
-                    //const td1 = document.createElement("td");
-                    //const th = document.createElement("th");
-                    //th.append(`${counter}`);
-                    //td1.append();
-                    //tr.append(th);
-                    //tr.append(td1);
-
-                    
-                    
-                                       
-                    // добавляем полученные элементы в таблицу
+                                      
                     tBody.append(tr);
                 });
             }
         }
 
-        async function AnnouncementInfo(Id){
-            const response = await fetch(`/api/Ann/${Id}`, {
+         async function DisplayAnnouncementInfo(id){
+            
+
+            const response = await fetch(`/api/Ann/${id}`, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
-            // если запрос прошел нормально
             if (response.ok === true) {
-                // получаем данные
-                const ann = await response.json();
-                let tBody = document.querySelector("tbody");
+                 const ann = await response.json();
 
-                var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
-                    keyboard: false
-                  })
-                  myModal.Show();
+                let modalTitle = document.getElementById("infoModalLabel");
+                modalTitle.innerText = `${ann.title}`;
+
+                let modalDescription = document.getElementById("infoModalDescription");
+                modalDescription.innerText = `${ann.description}`;
+
+                let annDate = document.getElementById("announcementDate");
+                annDate.innerText = `${ann.createdDate.split('T')[0]}`;
+                
+                let myModal = new bootstrap.Modal(document.getElementById('infoModal'), {
+                    keyboard: false 
+                  });
+
+                let similar = document.getElementById("similarTable");
+                similar.firstChild.remove();
+
+                let counter = 0 ;
+                ann.similarAnnouncements.forEach(item=>{
+                    counter++;
+                    
+                    let tr = similar.insertRow();
+
+                    let td = tr.insertCell(0);
+                    td.className = "counter";
+                    td.append(`${counter}`);
+
+                    let td1 = tr.insertCell(1);
+                    td1.classList.add("text-center");
+                    td1.append(`${item.title}`);
+                    td1.addEventListener("click",()=>myModal.hide());
+                    td1.addEventListener("click", ()=>DisplayAnnouncementInfo(item.id));
+                });
+                  myModal.toggle();   
             }
         }
 
-        
+        async function EditAnnouncement(id,title,description)
+        {
+            const response = await fetch(`/api/Ann/${id}`, {
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                        id: annId,
+                        title: Title,
+                        description: Description
+                        })
+            });
+            if (response.ok === true) {
+
+            }
+        }
         
             
             

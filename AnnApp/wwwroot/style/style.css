@@ -10,13 +10,21 @@
     width: 20%;
 } */
 
-tr .items .btn {
-    justify-content: stretch;
-    max-width: max-content;
+.items td .btn {
+    width:80%;
    
+}
+tr :hover{
+    cursor: pointer;
 }
 
 .container-fluid
 {
     width: 95%;
+}
+
+#announcementDate
+{
+    position: absolute;
+    left: 5%;
 }
