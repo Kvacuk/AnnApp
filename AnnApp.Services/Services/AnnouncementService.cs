@@ -96,12 +96,13 @@ namespace AnnApp.Services.Services
             string[] dtoDescriptionArr = dto.Description.Split(' ', ',', '.');
             var list = GetAnnouncementListAsync().Result;
 
-            var res = list
-                .Where(x => x.Title.Split(' ').Intersect(dtoTitleArr).Count() > 0&& x.Description.Split(' ').Intersect(dtoDescriptionArr).Count() > 0)
-                .OrderBy(x=> x.Title.Split(' ').Intersect(dtoTitleArr).Count())
-                .SkipWhile(x=>x.Id==dto.Id)
-                .Take(3);
+            var res = list.OrderByDescending(x => x.Title.Split(' ', ',', '.').Intersect(dtoTitleArr).Count() + x.Description.Split(' ', ',', '.').Intersect(dtoDescriptionArr).Count()).SkipWhile(x=>x.Id==dto.Id).Take(3);
+
             return res;
+
+
+            ///another way
+            
             //int counter = 0;
             //foreach (var item in list)
             //{

@@ -1,112 +1,120 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <link rel="stylesheet" href="style/style.css">
-    <title>AnnouncementApp</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/style.css">
+  <title>AnnouncementApp</title>
 </head>
+
 <body>
-    <div class="container-fluid ">
-        <h1 class="header text-center">Announcements</h1>
-        <form name="announcementsForm" class="mb-4">
-            <div class="mb-3">
-                <label for="titleField" class="form-label">Title</label>
-                <input type="text" class="form-control" id="titleField">
+  <div class="container-fluid ">
+    <h1 class="header text-center">Announcements</h1>
+    <form id="announcementsForm" class="mb-4">
+      <div class="mb-3">
+        <label for="titleField" class="form-label">Title</label>
+        <input type="text" class="form-control" id="titleField">
+      </div>
+      <div class="mb-3">
+        <div class="form-group">
+          <label for="descriptionField">Description</label>
+          <textarea id="descriptionField" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+      <button type="reset" class="btn btn-success" onclick="CreateAnnouncement()">Save</button>
+      <button type="reset" class="btn btn-danger">Reset</button>
+    </form>
+
+
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">№</th>
+          <th scope="col">Title</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <!-- infoModal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center" id="infoModalLabel"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="infoModalDescription"></p>
+            <hr>
+            <div class="text-center">
+              <h4>Similar Announcements </h4>
+              <table id="similarTable" class="table table-hover">
+
+              </table>
             </div>
-            <div class="mb-3">
-                <div class="form-group">
-                    <label for="descriptionField">Description</label>
-                    <textarea id="descriptionField" class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success">Save</button>
-            <button type="reset" class="btn btn-danger">Reset</button>
-        </form>
+
+          </div>
 
 
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">№</th>
-                    <th scope="col">Title</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+          <div class="modal-footer">
+            <p id="announcementDate"></p>
+            <button type="button" class="btn btn-outline-primary" id="editBtn"
+              onclick="EditAnnouncement()">Edit</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-  <!-- infoModal -->
-  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="infoModalLabel"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
         </div>
-        <div class="modal-body" >
-          <p id="infoModalDescription"></p>
-          <hr>
-          <div class="text-center" >
-            <h3>Similar Announcements </h3>
-            <table id="similarTable"class="table table-hover">
-              
-            </table>
+      </div>
+    </div>
+    <!-- editModal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center" id="editModalLabel">Editing</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" id="annId" value="0" />
+              <div class="mb-3">
+                <label for="editTitle" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="editTitle">
+              </div>
+              <div class="mb-3">
+                <label for="editDescription" class="col-form-label ">Description:</label>
+                <textarea class="form-control" id="editDescription" rows="10"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <p id="announcementDate1"></p>
+            <button type="button" class="btn btn-outline-success"
+              onclick="SaveEditingAnnouncement()">Save</button>
+            <button type="button" class="btn btn-outline-danger" onclick="DeleteAnnouncement()">Delete</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
-        </div>
-        
-        
-        <div class="modal-footer">
-          <p id="announcementDate"></p>
-          <button type="button" class="btn btn-outline-primary">Edit</button>
-          <button type="button" class="btn btn-outline-danger">Delete</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          
-        </div>
+
       </div>
     </div>
   </div>
-<!-- editModal -->
-<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center" id="infoModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" >
-        <form>
-          <div class="mb-3">
-            <label for="editTitle" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" id="editTitle">
-          </div>
-          <div class="mb-3">
-            <label for="editDescription" class="col-form-label">Description:</label>
-            <textarea class="form-control" id="editDescription"></textarea>
-          </div>
-        </form>
-      </div>
-      </div>
-      
-      
-      <div class="modal-footer">
-        <p id="announcementDate"></p>
-        <button type="button" class="btn btn-outline-primary">Edit</button>
-        <button type="button" class="btn btn-outline-danger">Delete</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
-      </div>
-    </div>
   </div>
-</div>
-    </div>
 </body>
-    <script src="js/ann.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-        GetAnnouncementsList();
-    </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script></body>
+<script src="js/ann.js" asp-append-version="true"></script>
+<script type="text/javascript">
+  GetAnnouncementsList();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
 </html>

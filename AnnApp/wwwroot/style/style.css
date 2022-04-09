@@ -6,10 +6,6 @@
     font-weight: bold;
 }
 
-/* .btn{
-    width: 20%;
-} */
-
 .items td .btn {
     width:80%;
    
@@ -23,8 +19,9 @@ tr :hover{
     width: 95%;
 }
 
-#announcementDate
+#announcementDate, #announcementDate1  
 {
     position: absolute;
     left: 5%;
 }
+
