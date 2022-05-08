@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AnnContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+builder.Services.AddDbContext<AnnContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),b=>b.MigrationsAssembly("AnnApp.Core")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+//.AddDbContextFactory<AnnContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //DI
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

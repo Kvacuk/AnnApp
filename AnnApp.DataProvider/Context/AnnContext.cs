@@ -11,9 +11,9 @@ namespace AnnApp.DataProvider.Context
     public class AnnContext : DbContext
     {
         public DbSet<Announcement> Annoucements { get; set; }
-        public AnnContext(DbContextOptions<AnnContext> options) : base(options)
+        public AnnContext(DbContextOptions<AnnContext> options) : base(options) 
         {
-            Database.EnsureCreated();
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,4 +72,6 @@ namespace AnnApp.DataProvider.Context
                 );
         }
     }
+
+
 }
