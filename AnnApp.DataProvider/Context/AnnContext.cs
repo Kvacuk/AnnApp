@@ -1,21 +1,15 @@
 ﻿using AnnApp.DataProvider.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnnApp.DataProvider.Context
 {
     public class AnnContext : DbContext
     {
         public DbSet<Announcement> Annoucements { get; set; }
-        public AnnContext(DbContextOptions<AnnContext> options) : base(options) 
+        public AnnContext(DbContextOptions<AnnContext> options) : base(options)
         {
-            
-        }
 
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Announcement>().HasData(

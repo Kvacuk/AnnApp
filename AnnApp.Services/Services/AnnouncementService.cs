@@ -66,7 +66,7 @@ namespace AnnApp.Services.Services
         public async Task<AnnouncementDto> GetAnnouncementByIdAsync(string Id)
         {
             var expressionForGuid = @"^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$";
-            if (!String.IsNullOrWhiteSpace(Id) &&  Regex.IsMatch(Id, expressionForGuid))
+            if (!String.IsNullOrWhiteSpace(Id) && Regex.IsMatch(Id, expressionForGuid))
             {
                 var item = await _database.AnnouncementRepository.GetItemAsync(Id);
                 if (item != null)
@@ -92,17 +92,17 @@ namespace AnnApp.Services.Services
 
         private IEnumerable<AnnouncementDto> SimilarAnnouncements(AnnouncementDto dto)
         {
-            string[] dtoTitleArr = dto.Title.Split(' ',',','.');
+            string[] dtoTitleArr = dto.Title.Split(' ', ',', '.');
             string[] dtoDescriptionArr = dto.Description.Split(' ', ',', '.');
             var list = GetAnnouncementListAsync().Result;
 
-            var res = list.OrderByDescending(x => x.Title.Split(' ', ',', '.').Intersect(dtoTitleArr).Count() + x.Description.Split(' ', ',', '.').Intersect(dtoDescriptionArr).Count()).SkipWhile(x=>x.Id==dto.Id).Take(3);
+            var res = list.OrderByDescending(x => x.Title.Split(' ', ',', '.').Intersect(dtoTitleArr).Count() + x.Description.Split(' ', ',', '.').Intersect(dtoDescriptionArr).Count()).SkipWhile(x => x.Id == dto.Id).Take(3);
 
             return res;
 
 
             ///another way
-            
+
             //int counter = 0;
             //foreach (var item in list)
             //{

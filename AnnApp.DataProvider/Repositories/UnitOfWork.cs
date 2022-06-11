@@ -1,10 +1,5 @@
 ﻿using AnnApp.DataProvider.Context;
 using AnnApp.DataProvider.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnnApp.DataProvider.Repositories
 {
@@ -23,7 +18,7 @@ namespace AnnApp.DataProvider.Repositories
         {
             get
             {
-                if(_announcementRepository == null)
+                if (_announcementRepository == null)
                 {
                     _announcementRepository = new AnnouncementRepository(db);
                 }
@@ -33,7 +28,7 @@ namespace AnnApp.DataProvider.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if(!_disposed)
+            if (!_disposed)
             {
                 if (disposing)
                     db.Dispose();
@@ -41,12 +36,10 @@ namespace AnnApp.DataProvider.Repositories
                 _disposed = true;
             }
         }
-
         public async Task SaveAsync()
         {
             await db.SaveChangesAsync();
         }
-
         ~UnitOfWork()
         {
             Dispose(false);

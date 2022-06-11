@@ -3,7 +3,6 @@
     public interface IUnitOfWork : IDisposable
     {
         IAnnouncementRepository AnnouncementRepository { get; }
-
         Task SaveAsync();
     }
 }

@@ -64,7 +64,6 @@ namespace AnnApp.Tests.Services.Test
         #endregion
         #region GetAnnouncements
         [Fact]
-        
         public async Task GetAnnouncementList()
         {
             //Arrange 
@@ -91,13 +90,11 @@ namespace AnnApp.Tests.Services.Test
             //Assert
             Assert.Equal(expectedId, actual.Id);
         }
-
-
         #endregion
 
         #region EditAnnouncement
-         [Fact]
-         public async Task EditAnnouncement()
+        [Fact]
+        public async Task EditAnnouncement()
         {
             //Arrange
             await _context.AnnouncementRepository.CreateAsync(_correctAnnouncement);
@@ -129,7 +126,5 @@ namespace AnnApp.Tests.Services.Test
             Assert.Equal(0, actualCount);
         }
         #endregion
-
-
     }
 }

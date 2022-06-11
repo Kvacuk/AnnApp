@@ -6,7 +6,6 @@ namespace AnnApp.DataProvider.Repositories
 {
     public class AnnouncementRepository : Repository<Announcement, string>, IAnnouncementRepository
     {
-
         public AnnouncementRepository(AnnContext context) : base(context)
         {
 

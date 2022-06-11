@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnnApp.DataProvider.Context
 {
@@ -21,7 +16,7 @@ namespace AnnApp.DataProvider.Context
             IConfigurationRoot config = builder.Build();
 
             string connectionString = config.GetConnectionString("DefaultConnection");
-            optionBuilder.UseSqlServer(connectionString,b=>b.MigrationsAssembly("AnnApp.Core"));
+            optionBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("AnnApp.DataProvider"));
             return new AnnContext(optionBuilder.Options);
         }
     }

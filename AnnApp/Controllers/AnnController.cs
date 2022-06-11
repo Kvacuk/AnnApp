@@ -1,9 +1,5 @@
-﻿using AnnApp.Services.DTO;
-using AnnApp.Services.Interfaces;
+﻿using AnnApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AnnApp.Core.Controllers
 {
@@ -37,15 +33,15 @@ namespace AnnApp.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewAnnoucement(string title, string description)
         {
-            var addedAnnouncement = await _announcementService.AddAnnouncementAsync(title,description);
+            var addedAnnouncement = await _announcementService.AddAnnouncementAsync(title, description);
             return Ok(addedAnnouncement);
         }
 
         /// Allows you to edit a announcement.
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditAnnouncement(string id, string title,string description)
+        public async Task<IActionResult> EditAnnouncement(string id, string title, string description)
         {
-            var res = await _announcementService.EditAnnouncementAsync(id,title,description);
+            var res = await _announcementService.EditAnnouncementAsync(id, title, description);
             return Ok(res);
         }
 

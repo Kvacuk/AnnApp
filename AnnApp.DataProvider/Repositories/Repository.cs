@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnnApp.DataProvider.Context;
 using AnnApp.DataProvider.Interfaces;
-using AnnApp.DataProvider.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace AnnApp.DataProvider.Repositories
 {
-    public class Repository<TEntity,TKey> : IRepository<TEntity,TKey> where TEntity : class
+    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
     {
         readonly AnnContext _context;
         public Repository(AnnContext context)

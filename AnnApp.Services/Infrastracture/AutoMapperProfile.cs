@@ -9,10 +9,8 @@ namespace AnnApp.Services.Infrastracture
         public AutoMapperProfile()
         {
             CreateMap<AnnouncementDto, Announcement>();
-            
 
-
-            CreateMap<Announcement, AnnouncementDto>()               
+            CreateMap<Announcement, AnnouncementDto>()
                 .ForMember(x => x.SimilarAnnouncements, opt => opt.Ignore());
         }
     }
